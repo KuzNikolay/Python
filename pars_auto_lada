@@ -1,0 +1,38 @@
+
+import time
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+
+browser = webdriver.Chrome()  # Открываем браузер
+browser.get("https://auto.ru/")  # Открываем auto.ru в браузере
+bottonlada = '//*[@id="LayoutIndex"]/div/div/div[1]/div/div[1]/div[3]/div/div[1]/a[1]'
+bottonl = browser.find_element(by=By.XPATH, value=bottonlada)
+bottonl.click() # click LADA
+
+time.sleep(3)
+chekskred = '/html/body/div[2]/div/div[2]/div[3]/div[2]/div/div[2]/div/div[2]/div[1]/div[2]/label'
+chekskr = browser.find_element(by=By.XPATH, value=chekskred)
+chekskr.click() # click в кредит
+
+time.sleep(3)
+botton_s = '/html/body/div[2]/div/div[2]/div[3]/div[2]/div/div[2]/div/div[2]/div[3]/div[3]/button'
+botton_see = browser.find_element(by=By.XPATH, value=botton_s)
+botton_see.click() # click Показать
+
+time.sleep(3)
+# XPATH_PRICE = '/html/body/div[2]/div/div[2]/div[3]/div[2]/div/div[2]/div/div[8]/div[2]/div/div[2]/div[1]/div[1]/div[2]/div[1]/div/div[1]'
+# price = browser.find_elements(by=By.XPATH, value=XPATH_PRICE)
+price = browser.find_elements(by=By.CSS_SELECTOR, value=f"[class='ListingItemPrice__content']")
+minlada =100000000
+for element in price:
+    try:
+        c=element.text
+        c = c.replace(' ', '')
+        c =int((c[:-1]))
+        # print(c)
+        if minlada > c:
+            minlada = c
+    except:
+        print('error')
+
+print('min_lada=', minlada)
